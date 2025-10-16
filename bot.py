@@ -37,30 +37,31 @@ def is_admin(msg: Message) -> bool:
 
 
 def chat_human(chat) -> str:
-if chat.type == ChatType.PRIVATE:
-return f"👤 {chat.full_name} (private)"
-if chat.username:
-return f"👥 @{chat.username}"
-return f"👥 {chat.title} ({chat.id})"
+    if chat.type == ChatType.PRIVATE:
+        return f"👤 {chat.full_name} (private)"
+    if chat.username:
+        return f"👥 @{chat.username}"
+    return f"👥 {chat.title} ({chat.id})"
+
 
 
 
 
 def author_human(msg: Message) -> str:
-name = (msg.from_user.full_name or "user") if msg.from_user else "user"
-tag = f"@{msg.from_user.username}" if (msg.from_user and msg.from_user.username) else ""
-return f"{name} {tag}".strip()
-
-
+    name = (msg.from_user.full_name or "user") if msg.from_user else "user"
+    tag = f"@{msg.from_user.username}" if (msg.from_user and msg.from_user.username) else ""
+    return f"{name} {tag}".strip()
 
 
 async def notify(text: str):
-# надсилаємо в адмін і резерв (якщо задано)
-if ADMIN_CHAT_ID:
-try:
-await bot.send_message(ADMIN_CHAT_ID, text)
-except Exception as e:
-print("admin notify failed:", e)
-if RESERVE_CHAT_ID and RESERVE_CHAT_ID != ADMIN_CHAT_ID:
-try:
-asyncio.run(run_polling())
+    # надсилаємо в адмін і резерв (якщо задано)
+    if ADMIN_CHAT_ID:
+        try:
+            await bot.send_message(ADMIN_CHAT_ID, text)
+        except Exception as e:
+            print("admin notify failed:", e)
+    if RESERVE_CHAT_ID and RESERVE_CHAT_ID != ADMIN_CHAT_ID:
+        try:
+            await bot.send_message(RESERVE_CHAT_ID, text)
+        except Exception as e:
+            print("reserve notify failed:", e)

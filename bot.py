@@ -21,11 +21,12 @@ TZ = ZoneInfo("Europe/Kyiv")
 
 
 # Засіваємо початкові правила, якщо БД порожня
+# Засіваємо початкові правила, якщо БД порожня
 if not db.list_rules():
-for ph in INIT_PHRASES:
-db.add_phrase(ph)
-for words in INIT_ALLWORDS:
-db.add_allwords(words)
+    for ph in INIT_PHRASES:
+        db.add_phrase(ph)
+    for words in INIT_ALLWORDS:
+        db.add_allwords(words)
 
 
 

@@ -1,7 +1,6 @@
 import sqlite3, json
 from typing import List, Dict, Any, Optional
 
-
 class DB:
     def __init__(self, path: str):
         self.path = path
@@ -58,7 +57,7 @@ class DB:
             out.append(data)
         return out
 
-    # ===== settings (на майбутнє) =====
+    # ===== settings =====
     def get(self, key: str) -> Optional[str]:
         with sqlite3.connect(self.path) as c:
             row = c.execute("SELECT value FROM settings WHERE key = ?", (key,)).fetchone()

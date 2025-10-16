@@ -32,8 +32,7 @@ if not db.list_rules():
 
 
 def is_admin(msg: Message) -> bool:
-return msg.from_user and msg.from_user.id == ADMIN_CHAT_ID
-
+    return msg.from_user and msg.from_user.id == ADMIN_CHAT_ID
 
 
 

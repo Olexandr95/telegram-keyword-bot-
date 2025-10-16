@@ -1,6 +1,5 @@
-from rapidfuzz import fuzz, process
+from rapidfuzz import fuzz
 from unidecode import unidecode
-
 
 class TextProc:
     def __init__(self, fuzzy_threshold: int = 85):
@@ -11,14 +10,15 @@ class TextProc:
             return ""
         return unidecode(text.lower().strip())
 
-    def fuzzy_match(self, text: str, patterns: list[str]) -> bool:
-        text_norm = self.normalize(text)
-        for pattern in patterns:
-            pattern_norm = self.normalize(pattern)
-            if fuzz.partial_ratio(pattern_norm, text_norm) >= self.fuzzy_threshold:
-                return True
-        return False
+    def match_phrase(self, text: str, phrase: str) -> bool:
+        a = self.normalize(text)
+        b = self.normalize(phrase)
+        return fuzz.partial_ratio(a, b) >= self.fuzzy_threshold
 
-    def all_words_match(self, text: str, words: list[str]) -> bool:
-        text_norm = self.normalize(text)
-        return all(word in text_norm for word in [self.normalize(w) for w in words])
+    def match_allwords(self, text: str, words: list[str]) -> bool:
+        a = self.normalize(text)
+        for w in words:
+            b = self.normalize(w)
+            if fuzz.partial_ratio(a, b) < self.fuzzy_threshold:
+                return False
+        return True

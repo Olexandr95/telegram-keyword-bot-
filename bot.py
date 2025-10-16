@@ -1,4 +1,5 @@
 import asyncio
+from aiogram.client.default import DefaultBotProperties
 from datetime import timezone
 from zoneinfo import ZoneInfo
 from aiogram import Bot, Dispatcher, F
@@ -13,7 +14,7 @@ from db import DB
 from textproc import TextProc
 
 
-bot = Bot(BOT_TOKEN, parse_mode="HTML")
+bot = Bot(BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
 dp = Dispatcher()
 db = DB(DB_PATH)
 proc = TextProc(FUZZY_THRESHOLD)
